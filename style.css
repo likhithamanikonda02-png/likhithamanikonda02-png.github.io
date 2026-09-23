@@ -142,10 +142,14 @@ nav a:hover { color: var(--ink); text-decoration: none; }
   line-height: 1.08;
   letter-spacing: -0.01em;
   max-width: 12ch;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero p.lede {
   margin-top: 22px;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 54ch;
   color: var(--ink-dim);
   font-size: 18px;
@@ -195,6 +199,7 @@ nav a:hover { color: var(--ink); text-decoration: none; }
   margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 18px;
   font-size: 15px;
 }
