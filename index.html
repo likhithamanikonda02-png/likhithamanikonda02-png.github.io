@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Likhitha Manikonda — Security &amp; Software Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    box-sizing: border-box;
+    --ink:        #eef0f2;
+    --ink-dim:    #9aa5b1;
+    --ink-faint:  #6b7480;
+    --bg:         #0e131a;
+    --bg-panel:   #141b24;
+    --bg-panel-2: #10161e;
+    --line:       #232c38;
+    --amber:      #e3a857;
+    --amber-dim:  #7a6338;
+    --cyan:       #4fb6c4;
+
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --ink:        #171b21;
+      --ink-dim:    #565f6b;
+      --ink-faint:  #848d97;
+      --bg:         #f6f4ef;
+      --bg-panel:   #ffffff;
+      --bg-panel-2: #efece4;
+      --line:       #ddd8cc;
+      --amber-dim:  #ecd9b6;
+    }
+  }
+
+  :root[data-theme="light"] {
+    --ink:        #171b21;
+    --ink-dim:    #565f6b;
+    --ink-faint:  #848d97;
+    --bg:         #f6f4ef;
+    --bg-panel:   #ffffff;
+    --bg-panel-2: #efece4;
+    --line:       #ddd8cc;
+    --amber-dim:  #ecd9b6;
+  }
+
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+  * { box-sizing: inherit; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  a { color: var(--amber); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .mono {
+    font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .wrap-wide {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Header ---------- */
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .headbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    max-width: 920px;
+    margin: 0 auto;
+    gap: 16px;
+  }
+
+  .headbar .name {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  nav {
+    display: flex;
+    gap: 22px;
+    font-size: 14px;
+    color: var(--ink-dim);
+    overflow-x: auto;
+  }
+
+  nav a { color: var(--ink-dim); white-space: nowrap; }
+  nav a:hover { color: var(--ink); text-decoration: none; }
+
+  /* ---------- Hero ---------- */
+
+  .hero {
+    padding: 76px 0 56px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    color: var(--amber);
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-size: clamp(34px, 6vw, 52px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    max-width: 12ch;
+  }
+
+  .hero p.lede {
+    margin-top: 22px;
+    max-width: 54ch;
+    color: var(--ink-dim);
+    font-size: 18px;
+  }
+
+  .hero .trace {
+    margin-top: 44px;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .trace path.line {
+    fill: none;
+    stroke: var(--cyan);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+    animation: draw 2.1s ease-out 0.15s forwards;
+  }
+
+  .trace circle.mark {
+    fill: var(--amber);
+    opacity: 0;
+    animation: pop 0.4s ease-out 1.85s forwards;
+  }
+
+  .trace text.tag {
+    fill: var(--ink-faint);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    opacity: 0;
+    animation: pop 0.5s ease-out 2s forwards;
+  }
+
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes pop { to { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trace path.line { animation: none; stroke-dashoffset: 0; }
+    .trace circle.mark, .trace text.tag { animation: none; opacity: 1; }
+  }
+
+  .hero .contacts {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    font-size: 15px;
+  }
+
+  .hero .contacts a { color: var(--ink); border-bottom: 1px solid var(--amber-dim); }
+  .hero .contacts a:hover { border-color: var(--amber); text-decoration: none; }
+
+  /* ---------- Sections ---------- */
+
+  section {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  section .kicker {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+
+  section h2 {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 28px;
+  }
+
+  /* ---------- Focus areas table ---------- */
+
+  .status-table {
+    border-top: 1px solid var(--line);
+  }
+
+  .status-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 18px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .status-row .domain {
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .status-row .items {
+    color: var(--ink-dim);
+    font-size: 15.5px;
+  }
+
+  @media (max-width: 600px) {
+    .status-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  /* ---------- Experience ---------- */
+
+  .role {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .role:last-child { border-bottom: none; }
+
+  .role-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
+
+  .role-head .title { font-weight: 600; font-size: 17px; }
+  .role-head .when {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    color: var(--ink-faint);
+  }
+
+  .role .org { color: var(--ink-dim); font-size: 14.5px; margin-top: 2px; }
+
+  .role ul {
+    margin: 14px 0 0;
+    padding-left: 20px;
+    color: var(--ink-dim);
+  }
+  .role li { margin-bottom: 6px; font-size: 15.5px; }
+  .role li::marker { color: var(--amber); }
+
+  /* ---------- Projects ---------- */
+
+  .project {
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .project:last-child { border-bottom: none; }
+
+  .project h3 { font-size: 18px; font-weight: 600; }
+
+  .project .stack {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    color: var(--cyan);
+    letter-spacing: 0.01em;
+  }
+
+  .project p { margin: 0; color: var(--ink-dim); font-size: 15.5px; max-width: 62ch; }
+
+  .project .note {
+    font-size: 13px;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  /* ---------- Credentials ---------- */
+
+  .cred-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  @media (max-width: 640px) {
+    .cred-grid { grid-template-columns: 1fr; }
+  }
+
+  .cred-grid h3 {
+    font-size: 14px;
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .cred-item { margin-bottom: 14px; }
+  .cred-item .t { font-weight: 600; font-size: 15.5px; }
+  .cred-item .s { color: var(--ink-dim); font-size: 14px; margin-top: 2px; }
+
+  /* ---------- Footer ---------- */
+
+  footer {
+    padding: 48px 0 calc(48px + env(safe-area-inset-bottom, 0px));
+  }
+
+  footer h2 {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
+
+  footer p { color: var(--ink-dim); max-width: 50ch; margin-bottom: 24px; }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 15.5px;
+  }
+
+  .footer-bottom {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink-faint);
+    font-family: "IBM Plex Mono", monospace;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="headbar">
+    <span class="name">Likhitha Manikonda</span>
+    <nav>
+      <a href="#focus">Focus</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#credentials">Credentials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero wrap-wide" style="border-bottom:none; padding-bottom:0;">
+    <div class="eyebrow mono">security engineering · applied ai</div>
+    <h1>Finding the signal in the noise, on purpose.</h1>
+    <p class="lede">
+      I'm a cybersecurity engineer who builds the tools I use to find problems —
+      vulnerability scanners, log-based threat detection, and secure AI systems —
+      rather than just running someone else's.
+    </p>
+
+    <svg class="trace" viewBox="0 0 880 140" preserveAspectRatio="none" role="img" aria-label="Signal trace rising to a marked detection point">
+      <path class="line" d="M0,100 L60,100 L80,94 L100,106 L120,98 L160,101 L190,96 L220,103 L260,99
+                             L300,100 L330,60 L345,130 L360,40 L375,110 L390,70 L410,100
+                             L460,100 L500,96 L540,104 L580,99 L620,101 L660,100 L700,100"/>
+      <circle class="mark" cx="375" cy="110" r="5"/>
+      <text class="tag" x="392" y="106">detected</text>
+    </svg>
+
+    <div class="contacts">
+      <a href="mailto:likhithamanikonda02@gmail.com">likhithamanikonda02@gmail.com</a>
+      <a href="tel:+19432217279">+1 (943) 221-7279</a>
+      <a href="https://linkedin.com/in/likhithamanikonda19" target="_blank" rel="noopener">linkedin.com/in/likhithamanikonda19</a>
+    </div>
+  </section>
+
+  <section id="focus" class="wrap-wide">
+    <div class="kicker">01 / FOCUS AREAS</div>
+    <h2>What I actually work with</h2>
+    <div class="status-table">
+      <div class="status-row">
+        <div class="domain">Security Engineering</div>
+        <div class="items">Vulnerability assessment, OWASP Top 10, secure coding, access controls, prompt injection defense, MITRE ATT&amp;CK, NIST CSF, ISO 27001</div>
+      </div>
+      <div class="status-row">
+        <div class="domain">Backend &amp; AI Systems</div>
+        <div class="items">Python, Java, FastAPI, Flask, Spring Boot, Hibernate, LangChain, ChromaDB, Retrieval-Augmented Generation, the Anthropic API</div>
+      </div>
+      <div class="status-row">
+        <div class="domain">DevOps &amp; Infrastructure</div>
+        <div class="items">GitHub Actions, Jenkins, Docker, Linux/Windows administration, nginx, SSL/TLS, Active Directory</div>
+      </div>
+      <div class="status-row">
+        <div class="domain">Data &amp; Reporting</div>
+        <div class="items">SQL, risk analysis, security policy documentation, executive-ready reporting</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="wrap-wide">
+    <div class="kicker">02 / EXPERIENCE</div>
+    <h2>Where I've done the work</h2>
+
+    <div class="role">
+      <div class="role-head">
+        <div class="title">Cybersecurity Analyst Intern</div>
+        <div class="when mono">2026 – Present</div>
+      </div>
+      <div class="org">AI SaaC Solutions LLC · Boston, MA</div>
+      <ul>
+        <li>Architect and operate a production RAG (Retrieval-Augmented Generation) system, with prompt injection defenses and access controls to protect sensitive data.</li>
+        <li>Build and maintain a custom vulnerability scanner performing SSL/TLS validation, HTTP security header analysis, and OWASP Top 10 mapping with automated risk scoring.</li>
+        <li>Own CI/CD deployment pipelines (GitHub Actions, Jenkins) and administer Linux VPS infrastructure, including nginx and SSL/TLS certificate management.</li>
+        <li>Author security and compliance documentation, including CISA-aligned SBOM briefs, for technical leadership.</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <div class="title">Teaching Assistant — Security Risk Analysis &amp; Capstone</div>
+        <div class="when mono">Aug 2025 – Dec 2025</div>
+      </div>
+      <div class="org">Virginia University of Science and Technology · Vienna, VA</div>
+      <ul>
+        <li>Instructed 30+ graduate students on IT auditing, risk analysis, and compliance frameworks (NIST CSF, ISO 27001), and evaluated technical security projects.</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-head">
+        <div class="title">Associate Software Engineer</div>
+        <div class="when mono">Apr 2023 – Mar 2024</div>
+      </div>
+      <div class="org">Nayagara Technologies · Bengaluru, India</div>
+      <ul>
+        <li>Built and shipped a health insurance marketplace application (Java, Spring Boot, Hibernate, SQL) with secure data handling aligned to HIPAA standards.</li>
+        <li>Collaborated in a 6-person Agile team on code reviews, debugging, and consistent development practices.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects" class="wrap-wide">
+    <div class="kicker">03 / PROJECTS</div>
+    <h2>Things I've built</h2>
+
+    <div class="project">
+      <h3>Perimeter</h3>
+      <div class="stack">React · Flask · nginx log analysis</div>
+      <p>A security operations dashboard paired with a Flask backend that detects brute-force
+        and scanning attacks by parsing nginx access logs in real time.</p>
+    </div>
+
+    <div class="project">
+      <h3>Screen</h3>
+      <div class="stack">React · Claude API</div>
+      <p>An ATS resume-screening tool that matches a resume against a job description, checks
+        ATS formatting compatibility, and generates a tailored resume using the Claude API.</p>
+    </div>
+
+    <div class="project">
+      <h3>LLM Prompt Injection Security Research</h3>
+      <div class="stack">Python · Groq API · LLaMA</div>
+      <p>An independent adversarial testing framework that runs 50 structured attack prompts
+        across five categories to evaluate LLM robustness against prompt injection.</p>
+    </div>
+
+    <div class="project">
+      <h3>Security Scanner</h3>
+      <div class="stack">Python · Flask</div>
+      <p>A vulnerability scanning tool performing SSL/TLS checks, OWASP Top 10 mapping, and
+        SBOM detection, with automated HTML report generation.</p>
+    </div>
+
+    <div class="project">
+      <h3>Visitor &amp; Interaction Tracker</h3>
+      <div class="stack">Docker · Podman · Jenkins</div>
+      <p>A small tracking site built and deployed through its own Jenkins pipeline, containerized
+        with Podman and served behind an nginx reverse proxy.</p>
+    </div>
+  </section>
+
+  <section id="credentials" class="wrap-wide">
+    <div class="kicker">04 / CREDENTIALS</div>
+    <h2>Education &amp; certifications</h2>
+    <div class="cred-grid">
+      <div>
+        <h3>EDUCATION</h3>
+        <div class="cred-item">
+          <div class="t">M.S., Cybersecurity &amp; Information Assurance</div>
+          <div class="s">Virginia University of Science and Technology · GPA 3.98/4.00 · Dec 2025</div>
+        </div>
+        <div class="cred-item">
+          <div class="t">B.S., Computer Science, Electronics &amp; Mathematics</div>
+          <div class="s">St. Francis College for Women, Hyderabad, India · May 2023</div>
+        </div>
+      </div>
+      <div>
+        <h3>CERTIFICATIONS &amp; TRAINING</h3>
+        <div class="cred-item">
+          <div class="t">CompTIA Security+ (In Progress)</div>
+          <div class="s">Hands-on labs (TryHackMe, CyberDefenders) — packet analysis, MITRE ATT&amp;CK</div>
+        </div>
+        <div class="cred-item">
+          <div class="t">AI Certification of Excellence — Advanced</div>
+          <div class="s">Collabera, validated across Claude, Gemini, and ChatGPT</div>
+        </div>
+        <div class="cred-item">
+          <div class="t">Ethical Hacking &amp; Penetration Testing Workshop</div>
+          <div class="s">Vulnerability assessment and defensive security techniques</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="wrap-wide">
+    <h2>Let's talk.</h2>
+    <p>Open to cybersecurity, software engineering, and applied AI security roles.
+       The fastest way to reach me is email.</p>
+    <div class="footer-links">
+      <a href="mailto:likhithamanikonda02@gmail.com">likhithamanikonda02@gmail.com</a>
+      <a href="tel:+19432217279">+1 (943) 221-7279</a>
+      <a href="https://linkedin.com/in/likhithamanikonda19" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <div class="footer-bottom wrap-wide" style="padding:0; max-width:none;">
+      New Jersey, United States
+    </div>
+  </footer>
+
+</main>
+
+</body>
+</html>
