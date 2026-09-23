@@ -1,15 +1,19 @@
 :root {
   box-sizing: border-box;
-  --ink:        #F2F4F7;
-  --ink-dim:    #AAB4C0;
-  --ink-faint:  #737E8B;
-  --bg:         #0D131B;
-  --bg-panel:   #151D27;
-  --bg-panel-2: #111923;
-  --line:       #27313D;
-  --amber:      #E8B15E;
-  --amber-dim:  #80683D;
-  --cyan:       #55BFCB;
+  --ink:       #EEF2F5;
+--ink-dim:   #AEB8C3;
+--ink-faint: #788492;
+
+--bg:        #0E131A;
+--bg-panel:  #141B24;
+--bg-panel-2:#10161E;
+
+--line:      #252F3B;
+
+--amber:     #E8B15E;
+--amber-dim: #80683D;
+
+--cyan:      #55BECA;
 
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
