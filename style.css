@@ -1,6 +1,6 @@
 :root {
   box-sizing: border-box;
-  --ink:        #eef0f2;
+  --ink:        #e2ebf4;
   --ink-dim:    #9aa5b1;
   --ink-faint:  #6b7480;
   --bg:         #0e131a;
@@ -40,7 +40,7 @@
   --bg-panel:   #ffffff;
   --bg-panel-2: #efece4;
   --line:       #ddd8cc;
-  --amber-dim:  #ecd9b6;
+  --amber-dim:  #efd6a7;
 }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
