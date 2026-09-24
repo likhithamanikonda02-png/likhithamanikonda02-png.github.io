@@ -166,13 +166,22 @@ nav a:hover { color: var(--ink); text-decoration: none; }
 }
 
 .hero h1 {
-  font-size: clamp(34px, 6vw, 52px);
+  font-size: clamp(26px, 3.2vw, 34px);
   font-weight: 700;
-  line-height: 1.08;
+  line-height: 1.15;
   letter-spacing: -0.01em;
-  max-width: 12ch;
+  white-space: nowrap;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (max-width: 700px) {
+  .hero h1 {
+    font-size: clamp(28px, 7vw, 40px);
+    line-height: 1.08;
+    white-space: normal;
+    max-width: 14ch;
+  }
 }
 
 .hero p.lede {
@@ -202,10 +211,24 @@ nav a:hover { color: var(--ink); text-decoration: none; }
   animation: draw 2.1s ease-out 0.15s forwards;
 }
 
+.hero h1 .highlight {
+  background: linear-gradient(90deg, var(--amber), var(--cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .trace circle.mark {
   fill: var(--amber);
   opacity: 0;
-  animation: pop 0.4s ease-out 1.85s forwards;
+  animation: pop 0.4s ease-out 1.85s forwards, pulse 1.8s ease-in-out 2.3s infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.6); }
 }
 
 .trace text.tag {
